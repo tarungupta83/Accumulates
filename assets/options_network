@@ -1,0 +1,29 @@
+var options = {
+    "nodes": {
+      "color": {
+        "highlight": {
+          "border": "rgba(179,0,233,1)",
+          "background": "rgba(194,0,255,0.76)"
+        }
+      }
+    },
+    "edges": {
+      "color": {
+        "color": "rgba(0,75,255,0.76)",
+        "highlight": "rgba(255,0,0,1)",
+        "inherit": false
+      },
+      "smooth": false
+    },
+    "interaction": {
+      "hideEdgesOnDrag": false
+    },
+    "physics": {
+      "repulsion": {
+        "springLength": 30,
+        "nodeDistance": 300
+      },
+      "minVelocity": 0.75,
+      "solver": "repulsion"
+    }
+  }

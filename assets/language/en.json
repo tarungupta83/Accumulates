@@ -1,0 +1,70 @@
+{
+  "register_root_directory_title": "Register root directory",
+  "register_root_directory_help": "Register root path from desktop (the root directory), i.e., the name of the folder on your desktop.",
+  "confirm": "Confirm",
+
+  "open": "OPEN",
+  "last_modify": "Last modify",
+  "days": "days",
+  "hours": "hours",
+  "minutes": "minutes",
+  "microseconds": "microseconds",
+
+  "title_expander_documents": "DOCS",
+  "button_produce_dict_main": "GENERATE DATA",
+  "button_apply_callout": "ANNOTATE CALLOUT",
+  "done": "Done",
+
+  "button_nodes_stats": "STATS: NODES",
+  "button_produce_nodes_network": "NETWORK: RELATIONAL",
+  "whether_manual_settings_overview": "Whether apply manual settings",
+  "help_whether_manual_settings_overview": "Select to manually tune network settings.",
+
+  "button_show_file_stats_finished": "STATS: PDFs FINISHED",
+
+  "title_expander_nodes_inspect": "INFO",
+  "multi_select_select_nodes": "NODES: INSPECT",
+  "whether_open_in_vscode": "Open in vscode",
+  "help_open_in_vscode": "Only works when vscode is installed",
+  "button_inspect_selected_nodes": "Inspect selected node(s)",
+  "select_papers": "Select paper(s)",
+  "select_paper": "SELECT YOUR PAPER",
+  "whether_manual_settings": "NETWORK: MANUAL SETTINGS",
+  "help_whether_manual_settings": "Select to manually tune network settings_.",
+
+  "title_expander_ports": "[3] PORT",
+  "whether_manual_input_path": "MANUAL INPUT PATH",
+  "help_whether_manual_input_path": "Accepts / separated args. E.g., F_1/F_2.",
+  "name_folder": "FOLDER SOURCE",
+  "pull": "PULL",
+  "push": "PUSH",
+  "button_reset_path_and_language": "RESET PATH & LANGUAGE",
+  "help_button_reset_path_and_language": "Clear the registered path and language",
+
+  "author": "Author(s): ",
+  "time_created": "Time created: ",
+
+  "rename": "RENAME PDFs BY TIME OF CREATION",
+  "rename_help": "Rename all documents in chronological order",
+
+  "title_expander_develope": "[4] DEV",
+
+  "note_count": "NOTE QUANTITY: ",
+  "percentage_pages_noted": "PERCENTAGE: PAGES NOTED:",
+  "latest_note_location_in_percentage": "PERCENTAGE: PAGE OF LATEST NOTE:",
+
+  "button_show_file_stats_unfinished": "STATS: PDFs UNFINISHED",
+
+  "metadata_subject": "SUBJECT: ",
+  "metadata_subject_include": "SUBJECT INCLUDE: ",
+  "metadata_subject_exclude": "SUBJECT EXCLUDE: ",
+
+  "button_show_file_stats_by_subject": "STATS: PDFs BY SUBJECT",
+
+  "node_translate": "NODES: TRANSLATE" ,
+  "nodes_to_translate": "NODES: TO TRANSLATE",
+  "nodes_translate_to": "NODES: TRANSLATE TO",
+  "nodes_register": "NODES: REGISTER",
+  "nodes_clear_registration": "CLEAR REGISTRATION",
+  "nodes_apply_registration": "APPLY REGISTRATION"
+}

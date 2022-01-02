@@ -1,0 +1,73 @@
+{
+  "register_root_directory_title": "注册根目录",
+  "register_root_directory_help": "从桌面上注册根路径（根目录），即你桌面上的文件夹名称。",
+  "confirm": "确认",
+
+  "open": "开",
+  "last_modify": "上次编辑时间",
+  "days": "天",
+  "hours": "小时",
+  "minutes": "分钟",
+  "microseconds": "微秒",
+
+  "title_expander_documents": "文",
+  "button_produce_dict_main": "数据提取",
+  "button_apply_callout": "呼出注释",
+  "done": "完成",
+
+  "button_nodes_stats": "节点统计",
+  "button_produce_nodes_network": "关系网络",
+  "whether_manual_settings_overview": "关系网络手动选项",
+  "help_whether_manual_settings_overview": "选择则手动调整网络设置。",
+
+  "button_show_file_stats_finished": "笔记统计: 已读完",
+
+  "title_expander_nodes_inspect": "鉴",
+  "multi_select_select_nodes": "鉴定节点",
+  "whether_open_in_vscode": "在vscode中开启",
+  "help_open_in_vscode": "只有在安装了vscode的情况下才有效",
+  "button_inspect_selected_nodes": "检查选定的节点",
+  "select_papers": "选择文件",
+  "select_paper": "选择文档",
+  "whether_apply_physics": "是否应用物理学效果_",
+  "help_whether_apply_physics": "如果选择，网络将使用物理学效果_。",
+  "whether_manual_settings": "是否手动设置",
+  "help_whether_manual_settings": "选择手动调整网络设置。",
+  "button_inspect_papers": "检查选定的文件",
+
+  "title_expander_ports": "三：驿",
+  "whether_manual_input_path": "是否手动输入路径",
+  "help_whether_manual_input_path": "接受用 “/” 分离的输入。例如，F_1/F_2。",
+  "name_folder": "文件夹名称",
+  "pull": "牵引",
+  "push": "复位",
+  "button_reset_path_and_language": "重制路径和语言",
+  "help_button_reset_path_and_language": "清除已注册的路径和语言",
+
+  "author": "作者: ",
+  "time_created": "创建时间: ",
+
+  "rename": "命名文档",
+  "rename_help": "按照时间顺序重新命名所有文档",
+
+  "title_expander_develope": "四：辟",
+
+  "note_count": "笔记总量：",
+  "percentage_pages_noted": "百分比：已有笔记的页数",
+  "latest_note_location_in_percentage": "百分比：最后笔记的位置",
+
+  "button_show_file_stats_unfinished": "笔记统计: 未读完",
+
+  "metadata_subject": "类别: ",
+  "metadata_subject_include": "类别 归入: ",
+  "metadata_subject_exclude": "类别 排出: ",
+
+  "button_show_file_stats_by_subject": "笔记统计: 类别",
+
+  "node_translate": "转化节点",
+  "nodes_to_translate": "目标节点",
+  "nodes_translate_to": "转化为",
+  "nodes_register": "注册",
+  "nodes_clear_registration": "清除",
+  "nodes_apply_registration": "应用"
+}
