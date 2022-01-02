@@ -1,4 +1,5 @@
 import os
+import string
 from pathlib import Path
 
 import fitz
@@ -38,6 +39,7 @@ class RenamePDFs:
             if i["time_created"][0].isdigit():
                 i["time_created"] = "D:" + i["time_created"]
             name_author: str = i["author"].split(" ")[-1].lower() if i["author"] else "unknown"
+            name_author: str = "".join([i for i in name_author if i in [i for i in string.ascii_lowercase]])
             i["index"] = list_dict_metadata.index(i) + 1
             i["name_new"] = f"paper{i['index']}.{i['time_created'][2:6]}_{i['time_created'][6:12]}_{name_author}.pdf"
             os.rename(self.path_store / i["name"], self.path_store / i["name_new"])
