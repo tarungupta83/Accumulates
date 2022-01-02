@@ -69,7 +69,9 @@ class CreateDict:
 
     def get_list_dict_annot_from_page(self, index_page: int) -> list[dict]:
         page = self.doc[index_page]
-        return [self.get_dict_from_annot(page, annot, index_page) for annot in page.annots()]
+        return [
+            self.get_dict_from_annot(page, annot, index_page) for annot in page.annots() if annot.type[1] == "Highlight"
+        ]
 
     def get_dict_from_annot(self, page: fitz.Page, annot: fitz.Annot, index_page: int) -> dict:
         text_annot: str = self._extract_annot(annot=annot, words_on_page=page.get_text("words"))

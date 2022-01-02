@@ -41,6 +41,7 @@ class ModifyNode:
                     [i for i in self.list_nodes if i["frequency_id"] == [i for i in d.keys()][0]][0]["id"]
                 )
                 translate_to: str = self.wrap([i for i in d.values()][0])
+                translate_to = "" if translate_to == "[delete]" else translate_to
                 info_annot = i.info
                 info_annot["content"] = info_annot["content"].replace(node_target, translate_to)
                 i.set_info(info_annot)

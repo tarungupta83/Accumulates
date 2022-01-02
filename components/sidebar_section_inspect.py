@@ -193,6 +193,14 @@ class SidebarSectionInspect:
             with main_c1:
                 list_node_frequency_id_reversed = self.list_node_frequency_id
                 list_node_frequency_id_reversed.reverse()
+                if os.path.exists(self.path_store / "translate.json"):
+                    with open(self.path_store / "translate.json") as reader:
+                        list_registered_translations = json.load(reader)
+                    list_node_frequency_id_reversed = [
+                        i
+                        for i in list_node_frequency_id_reversed
+                        if i not in [[k for k in i.keys()][0] for i in list_registered_translations]
+                    ]
                 nodes_to_translate = st.multiselect(
                     self.dict_language["nodes_to_translate"], options=list_node_frequency_id_reversed
                 )
