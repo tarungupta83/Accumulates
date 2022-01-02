@@ -3,6 +3,7 @@ from pathlib import Path
 
 import streamlit as st
 from functions.set_language import set_language
+from natsort import natsorted
 from utils.ports.pull import Pull
 
 
@@ -25,6 +26,7 @@ class SidebarSectionPull:
             list_all_files = os.listdir(path_unit)
             list_all_files = [f for f in list_all_files if not os.path.isfile(str(path_unit / f))]
             list_all_files = [f for f in list_all_files if not f.startswith(".")]
+            list_all_files = natsorted(list_all_files)
             arg = st.selectbox(self.dict_language["name_folder"], options=list_all_files)
         button_pull = st.button(self.dict_language["pull"])
         button_reset_path = st.button(
