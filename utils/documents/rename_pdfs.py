@@ -42,6 +42,7 @@ class RenamePDFs:
             name_author: str = "".join([i for i in name_author if i in [i for i in string.ascii_lowercase]])
             i["index"] = list_dict_metadata.index(i) + 1
             i["name_new"] = f"paper{i['index']}.{i['time_created'][2:6]}_{i['time_created'][6:12]}_{name_author}.pdf"
+            i["name_new"] = i["name_new"].replace(" ", "")
             os.rename(self.path_store / i["name"], self.path_store / i["name_new"])
 
     def register_renamed(self):
