@@ -23,7 +23,7 @@
   "button_show_file_stats_finished": "STATS: PDFs FINISHED",
 
   "title_expander_nodes_inspect": "INFO",
-  "multi_select_select_nodes": "NODES: INSPECT",
+  "multiselect_inspect_nodes": "NODES: INSPECT",
   "whether_open_in_vscode": "Open in vscode",
   "help_open_in_vscode": "Only works when vscode is installed",
   "button_inspect_selected_nodes": "Inspect selected node(s)",
@@ -66,5 +66,7 @@
   "nodes_translate_to": "NODES: TRANSLATE TO",
   "nodes_register": "NODES: REGISTER",
   "nodes_clear_registration": "CLEAR REGISTRATION",
-  "nodes_apply_registration": "APPLY REGISTRATION"
+  "nodes_apply_registration": "APPLY REGISTRATION",
+
+  "secondary_inspect_nodes": "SECONDARY NODES"
 }

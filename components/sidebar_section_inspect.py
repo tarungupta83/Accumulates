@@ -64,7 +64,7 @@ class SidebarSectionInspect:
                     self.dict_language["button_show_file_stats_finished"],
                     self.dict_language["button_show_file_stats_by_subject"],
                     self.dict_language["button_produce_nodes_network"],
-                    self.dict_language["multi_select_select_nodes"],
+                    self.dict_language["multiselect_inspect_nodes"],
                     self.dict_language["node_translate"],
                 ),
             )
@@ -100,18 +100,23 @@ class SidebarSectionInspect:
                 GetNodesNetwork(checkbox_manual_adjust)
                 os.system("open assets/network.html")
 
-        elif select_box_which_stats == self.dict_language["multi_select_select_nodes"]:
-
+        elif select_box_which_stats == self.dict_language["multiselect_inspect_nodes"]:
             with main_c1:
                 multiselect_nodes = st.multiselect(
-                    self.dict_language["multi_select_select_nodes"], self.list_node_frequency_id + ["[ALL]"]
+                    self.dict_language["multiselect_inspect_nodes"], options=self.list_node_frequency_id + ["[ALL]"]
                 )
+                nodes_secondary = st.multiselect(
+                    self.dict_language["secondary_inspect_nodes"], options=self.get_coexist_nodes(multiselect_nodes)
+                )
+
+                nodes_combined = multiselect_nodes + nodes_secondary
+
                 keywords: list[str] = open(Path("store", "keywords.json")).read().split("\n")
-                if multiselect_nodes and "[ALL]" not in multiselect_nodes:
+                if nodes_combined and "[ALL]" not in nodes_combined:
                     subset: list[dict] = [
-                        i for i in self.data_list_dicts if set(multiselect_nodes).issubset(i["nodes_frequency_id"])
+                        i for i in self.data_list_dicts if set(nodes_combined).issubset(i["nodes_frequency_id"])
                     ]
-                elif "[ALL]" in multiselect_nodes:
+                elif "[ALL]" in nodes_combined:
                     subset: list[dict] = self.data_list_dicts
                 else:
                     subset = []
@@ -266,6 +271,13 @@ class SidebarSectionInspect:
         if isinstance(list_input[0], list):
             return self.flatten(list_input[0]) + self.flatten(list_input[1:])
         return list_input[:1] + self.flatten(list_input[1:])
+
+    def get_coexist_nodes(self, list_input: list[str]) -> list:
+        subset: list[dict] = [i for i in self.data_list_dicts if set(list_input).issubset(i["nodes_frequency_id"])]
+        if list_input:
+            return [i for i in self.flatten([i["nodes_frequency_id"] for i in subset]) if i not in list_input]
+        else:
+            return []
 
     def get_cards(self, main_c1, list_dict_notes_stats):
         input_subject = []
