@@ -104,12 +104,17 @@ class SidebarSectionInspect:
 
             with main_c1:
                 multiselect_nodes = st.multiselect(
-                    self.dict_language["multi_select_select_nodes"], self.list_node_frequency_id
+                    self.dict_language["multi_select_select_nodes"], self.list_node_frequency_id + ["[ALL]"]
                 )
                 keywords: list[str] = open(Path("store", "keywords.json")).read().split("\n")
-                subset: list[dict] = [
-                    i for i in self.data_list_dicts if set(multiselect_nodes).issubset(i["nodes_frequency_id"])
-                ]
+                if multiselect_nodes and "[ALL]" not in multiselect_nodes:
+                    subset: list[dict] = [
+                        i for i in self.data_list_dicts if set(multiselect_nodes).issubset(i["nodes_frequency_id"])
+                    ]
+                elif "[ALL]" in multiselect_nodes:
+                    subset: list[dict] = self.data_list_dicts
+                else:
+                    subset = []
                 for i in subset:
                     st.markdown(
                         string_parser.get_card_html(i, [i for i in keywords if i]),
