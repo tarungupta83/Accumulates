@@ -94,7 +94,7 @@ class GetNodesNetwork:
                 },
                 # "interaction": {"hideEdgesOnDrag": false},
                 "physics": {
-                    "repulsion": {"springLength": 30, "nodeDistance": 240},
+                    "repulsion": {"springLength": 70, "nodeDistance": 300},
                     "minVelocity": 0.75,
                     "solver": "repulsion",
                 },
