@@ -238,7 +238,6 @@ class SidebarSectionInspect:
                         list_registered_translations = json.load(reader)
                     button_apply_registration = st.button(self.dict_language["nodes_apply_registration"])
                     button_clear_registration = st.button(self.dict_language["nodes_clear_registration"])
-                    st.write(list_registered_translations)
 
                     if nodes_to_translate and nodes_translate_to and button_register:
                         list_registered_translations += [{i: nodes_translate_to} for i in nodes_to_translate]
@@ -264,6 +263,9 @@ class SidebarSectionInspect:
                         ),
                         unsafe_allow_html=True,
                     )
+
+                if os.path.exists(self.path_store / "translate.json"):
+                    st.write(list_registered_translations)
 
     def flatten(self, list_input) -> list:
         if len(list_input) == 0:
