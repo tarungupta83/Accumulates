@@ -277,7 +277,9 @@ class SidebarSectionInspect:
     def get_coexist_nodes(self, list_input: list[str]) -> list:
         subset: list[dict] = [i for i in self.data_list_dicts if set(list_input).issubset(i["nodes_frequency_id"])]
         if list_input:
-            return [i for i in self.flatten([i["nodes_frequency_id"] for i in subset]) if i not in list_input]
+            return list(
+                set([i for i in self.flatten([i["nodes_frequency_id"] for i in subset]) if i not in list_input])
+            )
         else:
             return []
 
