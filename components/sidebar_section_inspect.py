@@ -125,7 +125,7 @@ class SidebarSectionInspect:
                         string_parser.get_card_html(i, [i for i in keywords if i]),
                         unsafe_allow_html=True,
                     )
-            pyperclip.copy(" ".join([i["content"] for i in subset]))
+            pyperclip.copy("\n\n".join([i["content"] for i in subset]))
 
         elif select_box_which_stats == self.dict_language["button_show_file_stats_unfinished"]:
             list_dict_notes_stats = GetNoteProportion().list_dict_notes_stats
