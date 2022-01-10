@@ -192,6 +192,8 @@ class SidebarSectionInspect:
             list_subjects = list(set(list_subjects))
             list_subjects = natsorted(list(set(list_subjects)))
             subjects_selected = st.multiselect(self.dict_language["metadata_subject"], options=list_subjects)
+            if not subjects_selected:
+                subjects_selected = list_subjects
             list_dict_notes_stats = [
                 i
                 for i in list_dict_notes_stats
