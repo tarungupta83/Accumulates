@@ -58,10 +58,13 @@ class string_parser:
         selected_keywords = [i for i in selected_keywords if i in content]
 
         for i in selected_keywords:
-            content = content.replace(i, string_parser.wrap_content_in_color_span(text=i, color="Gold"))
+            compiler = re.compile(re.escape(i), re.IGNORECASE)
+            content = compiler.sub(string_parser.wrap_content_in_color_span(text=i, color="Gold"), content)
+            # content = content.replace(i, string_parser.wrap_content_in_color_span(text=i, color="Gold"))
 
         for i in keywords:
-            content = content.replace(i, string_parser.wrap_content_in_color_span(text=i, color="Tomato"))
+            compiler = re.compile(re.escape(i), re.IGNORECASE)
+            content = compiler.sub(string_parser.wrap_content_in_color_span(text=i, color="Tomato"), content)
 
         source = string_parser.wrap_in_code_block(dict["source"], level="primary")
         content = string_parser.wrap_braces_in_color_span(content, color="LightSkyBlue")
