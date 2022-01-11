@@ -10,11 +10,10 @@ import fitz
 import numpy as np
 import streamlit as st
 from natsort import natsorted
-from utils.nodes.get_keywords import get_keywords
 
 
 class CreateDict:
-    def __init__(self, whether_get_keywords: bool = False):
+    def __init__(self):
         self.path_store = Path("store")
         self.path_output_main = self.path_store / "dicts.json"
         self.path_output_node = self.path_store / "nodes.json"
@@ -26,7 +25,7 @@ class CreateDict:
         self.get_dict_ranked_time_creation()
         self.set_list_dict_node()
         self.save_list_dict_node()
-        self.save_overall_keywords(whether_get_keywords)
+        self.save_overall_keywords()
 
         self.set_frequency_id_in_list_dict_main()
         self.save_dict_main()
@@ -186,13 +185,9 @@ class CreateDict:
         scores = [self.dict_ranked_time_creation[i["source_creation"]] for i in subset]
         return np.mean(scores) / max(self.dict_ranked_time_creation.values())
 
-    def save_overall_keywords(self, whether_get_keywords: bool, quantity_each_node: int = 6) -> list[str]:
-        content: str = " ".join([i["content"] for i in self.list_dict_main])
-        if whether_get_keywords:
-            keywords: list[str] = get_keywords(text=content, quantity=len(self.list_dict_node) * quantity_each_node)
-        else:
-            keywords: list[str] = [""]
-        keywords: list[str] = [i for i in keywords if not self.has_numbers(i)]
+    def save_overall_keywords(self) -> list[str]:
+        # keywords = self.flatten([re.split(" |-|_", i["id"]) for i in self.list_dict_node])
+        keywords = self.flatten([i['id'].replace('-', " ").replace("_", " ") for i in self.list_dict_node])
         with open(self.path_store / "keywords.json", "w") as writer:
             for i in keywords:
                 writer.write(i + "\n")
