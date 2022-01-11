@@ -52,13 +52,19 @@ class string_parser:
     def wrap_content_in_color_span(text: str, color: str):
         return f"<span style='color:{color};font-weight:bold'>{text}</span>"
 
-    def get_card_html(dict: dict, keywords: list[str]):
+    def get_card_html(dict: dict, keywords: list[str], selected_keywords: list[str]):
         content = dict["content"]
-        keywords = [i for i in keywords if i in content]
+        keywords = [i for i in keywords if i in content and i not in selected_keywords]
+        selected_keywords = [i for i in selected_keywords if i in content]
+
+        for i in selected_keywords:
+            content = content.replace(i, string_parser.wrap_content_in_color_span(text=i, color="Gold"))
+
         for i in keywords:
-            content = content.replace(i, string_parser.wrap_content_in_color_span(text=i, color="salmon"))
+            content = content.replace(i, string_parser.wrap_content_in_color_span(text=i, color="Tomato"))
+
         source = string_parser.wrap_in_code_block(dict["source"], level="primary")
-        content = string_parser.wrap_braces_in_color_span(content, color="DarkOrange")
+        content = string_parser.wrap_braces_in_color_span(content, color="LightSkyBlue")
         page = string_parser.wrap_in_code_block("Page: " + str(dict["page"]), level="primary")
         note = re.sub("[\[].*?[\]]", "", dict["note"])
         note = "No comments" if note.replace(" ", "") == "" else note

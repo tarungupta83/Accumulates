@@ -111,10 +111,16 @@ class SidebarSectionInspect:
 
                 nodes_combined = multiselect_nodes + nodes_secondary
 
-                keywords: list[str] = open(Path("store", "keywords.json")).read().split("\n")
+                nodes_as_keywords: list[str] = [
+                    i.replace("-", " ").replace("_", " ") for i in [self.get_id(i) for i in nodes_combined]
+                ]
+
                 if nodes_combined and "[ALL]" not in nodes_combined:
                     subset: list[dict] = [
-                        i for i in self.data_list_dicts if set(nodes_combined).issubset(i["nodes_frequency_id"])
+                        i
+                        for i in self.data_list_dicts
+                        if set(nodes_combined).issubset(i["nodes_frequency_id"])
+                        or any(e in i["content"] for e in nodes_as_keywords)
                     ]
                 elif "[ALL]" in nodes_combined:
                     subset: list[dict] = self.data_list_dicts
@@ -122,7 +128,11 @@ class SidebarSectionInspect:
                     subset = []
                 for i in subset:
                     st.markdown(
-                        string_parser.get_card_html(i, [i for i in keywords if i]),
+                        string_parser.get_card_html(
+                            dict=i,
+                            keywords=[i for i in open(Path("store", "keywords.json")).read().split("\n") if i],
+                            selected_keywords=nodes_as_keywords,
+                        ),
                         unsafe_allow_html=True,
                     )
             pyperclip.copy("\n\n".join([i["content"] for i in subset]))
@@ -216,6 +226,11 @@ class SidebarSectionInspect:
                 nodes_to_translate = st.multiselect(
                     self.dict_language["nodes_to_translate"], options=list_node_frequency_id_reversed
                 )
+
+                nodes_as_keywords: list[str] = [
+                    i.replace("-", " ").replace("_", " ") for i in [self.get_id(i) for i in nodes_to_translate]
+                ]
+
                 nodes_translate_to = st.text_input(self.dict_language["nodes_translate_to"])
                 button_register = st.button(self.dict_language["nodes_register"])
                 if nodes_to_translate:
@@ -261,7 +276,9 @@ class SidebarSectionInspect:
                 for i in subset:
                     st.markdown(
                         string_parser.get_card_html(
-                            i, [i for i in open(Path("store", "keywords.json")).read().split("\n") if i]
+                            dict=i,
+                            keywords=[i for i in open(Path("store", "keywords.json")).read().split("\n") if i],
+                            selected_keywords=nodes_as_keywords,
                         ),
                         unsafe_allow_html=True,
                     )
@@ -277,7 +294,14 @@ class SidebarSectionInspect:
         return list_input[:1] + self.flatten(list_input[1:])
 
     def get_coexist_nodes(self, list_input: list[str]) -> list:
-        subset: list[dict] = [i for i in self.data_list_dicts if set(list_input).issubset(i["nodes_frequency_id"])]
+        nodes_as_keywords: list[str] = [
+            i.replace("-", " ").replace("_", " ") for i in [self.get_id(i) for i in list_input]
+        ]
+        subset: list[dict] = [
+            i
+            for i in self.data_list_dicts
+            if set(list_input).issubset(i["nodes_frequency_id"]) or any(e in i["content"] for e in nodes_as_keywords)
+        ]
         if list_input:
             return natsorted(
                 list(set([i for i in self.flatten([i["nodes_frequency_id"] for i in subset]) if i not in list_input])),
@@ -285,6 +309,9 @@ class SidebarSectionInspect:
             )
         else:
             return []
+
+    def get_id(self, frequency_id: str) -> str:
+        return [i for i in self.list_dict_node if i["frequency_id"] == frequency_id][0]["id"]
 
     def get_cards(self, main_c1, list_dict_notes_stats):
         input_subject = []
