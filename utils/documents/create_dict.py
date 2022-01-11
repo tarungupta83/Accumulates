@@ -104,7 +104,7 @@ class CreateDict:
         """
         nodes = findall(r"\[(.*?)\]", content_annot, re.DOTALL)
         if nodes:
-            return [n.replace(" ", "") for n in nodes]  # non greedy search
+            return [n.replace(" ", "-") for n in nodes]  # non greedy search
         else:
             return "None"
 

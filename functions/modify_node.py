@@ -47,6 +47,7 @@ class ModifyNode:
                     translate_to = node_target
                 info_annot = i.info
                 info_annot["content"] = info_annot["content"].replace(node_target, translate_to)
+                info_annot["content"] = info_annot["content"].replace(node_target.replace('-', ' '), translate_to)
                 i.set_info(info_annot)
 
     def modify_doc_all_pages(self):
