@@ -154,11 +154,23 @@ class CreateDict:
             contain = False
         return contain
 
+    ## Current
     def set_frequency_table_all_nodes(self):
         all_nodes: list = [i["nodes"] for i in self.list_dict_main]
         all_nodes: list = self.flatten(all_nodes)
         self.frequencies: collections.Counter = counter(all_nodes)
         self.frequencies: dict = dict(self.frequencies)
+        for key in self.frequencies.keys():
+            self.frequencies[key] += self.get_num_unregistered_notes(key)
+
+    def get_num_unregistered_notes(self, key):
+        return len(
+            [
+                i
+                for i in self.list_dict_main
+                if key not in i["nodes"] and key.replace("-", " ").replace("_", " ") in i["content"]
+            ]
+        )
 
     def set_list_dict_node(self) -> list[dict]:
         self.list_dict_node = [
@@ -186,8 +198,7 @@ class CreateDict:
         return np.mean(scores) / max(self.dict_ranked_time_creation.values())
 
     def save_overall_keywords(self) -> list[str]:
-        # keywords = self.flatten([re.split(" |-|_", i["id"]) for i in self.list_dict_node])
-        keywords = self.flatten([i['id'].replace('-', " ").replace("_", " ") for i in self.list_dict_node])
+        keywords = self.flatten([i["id"].replace("-", " ").replace("_", " ") for i in self.list_dict_node])
         with open(self.path_store / "keywords.json", "w") as writer:
             for i in keywords:
                 writer.write(i + "\n")
