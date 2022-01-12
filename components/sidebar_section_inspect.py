@@ -235,7 +235,10 @@ class SidebarSectionInspect:
                 button_register = st.button(self.dict_language["nodes_register"])
                 if nodes_to_translate:
                     subset: list[dict] = [
-                        i for i in self.data_list_dicts if set(nodes_to_translate).intersection(i["nodes_frequency_id"])
+                        i
+                        for i in self.data_list_dicts
+                        if set(nodes_to_translate).intersection(i["nodes_frequency_id"])
+                        or any(e in i["content"] for e in nodes_as_keywords)
                     ]
                 else:
                     subset = []
