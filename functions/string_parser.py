@@ -92,7 +92,7 @@ class string_parser:
     </div>
     <div class="card-body">
     <blockquote class="blockquote mb-0">
-        <h6 style="line-height: 160%;">{content}</h6>
+        <h5 style="line-height: 160%;">{content}</h5>
     </blockquote>
     <p style="line-height: 160%;">{note}</p>
     </div>
