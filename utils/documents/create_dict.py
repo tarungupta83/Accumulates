@@ -168,7 +168,9 @@ class CreateDict:
             [
                 i
                 for i in self.list_dict_main
-                if key not in i["nodes"] and key.replace("-", " ").replace("_", " ") in i["content"]
+                if key not in i["nodes"]
+                and (key.replace("-", " ").replace("_", " ") in i["content"])
+                or (key in i["content"])
             ]
         )
 

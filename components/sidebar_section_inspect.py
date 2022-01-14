@@ -120,7 +120,10 @@ class SidebarSectionInspect:
                         i
                         for i in self.data_list_dicts
                         if set(nodes_combined).issubset(i["nodes_frequency_id"])
-                        or any(e in i["content"] for e in nodes_as_keywords)
+                        or any(
+                            e in i["content"]
+                            for e in nodes_as_keywords + [i.replace(" ", "-") for i in nodes_as_keywords]
+                        )
                     ]
                 elif "[ALL]" in nodes_combined:
                     subset: list[dict] = self.data_list_dicts
@@ -238,7 +241,10 @@ class SidebarSectionInspect:
                         i
                         for i in self.data_list_dicts
                         if set(nodes_to_translate).intersection(i["nodes_frequency_id"])
-                        or any(e in i["content"] for e in nodes_as_keywords)
+                        or any(
+                            e in i["content"]
+                            for e in nodes_as_keywords + [i.replace(" ", "-") for i in nodes_as_keywords]
+                        )
                     ]
                 else:
                     subset = []
@@ -303,7 +309,8 @@ class SidebarSectionInspect:
         subset: list[dict] = [
             i
             for i in self.data_list_dicts
-            if set(list_input).issubset(i["nodes_frequency_id"]) or any(e in i["content"] for e in nodes_as_keywords)
+            if set(list_input).issubset(i["nodes_frequency_id"])
+            or any(e in i["content"] for e in nodes_as_keywords + [i.replace(" ", "-") for i in nodes_as_keywords])
         ]
         if list_input:
             return natsorted(

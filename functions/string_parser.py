@@ -60,11 +60,20 @@ class string_parser:
         for i in selected_keywords:
             compiler = re.compile(re.escape(i), re.IGNORECASE)
             content = compiler.sub(string_parser.wrap_content_in_color_span(text=i, color="Gold"), content)
+            compiler_ = re.compile(re.escape(i.replace(" ", "-")), re.IGNORECASE)
+            content = compiler_.sub(
+                string_parser.wrap_content_in_color_span(text=i.replace(" ", "-"), color="Gold"), content
+            )
+
             # content = content.replace(i, string_parser.wrap_content_in_color_span(text=i, color="Gold"))
 
         for i in keywords:
             compiler = re.compile(re.escape(i), re.IGNORECASE)
             content = compiler.sub(string_parser.wrap_content_in_color_span(text=i, color="Tomato"), content)
+            compiler = re.compile(re.escape(i.replace(" ", "-")), re.IGNORECASE)
+            content = compiler.sub(
+                string_parser.wrap_content_in_color_span(text=i.replace(" ", "-"), color="Tomato"), content
+            )
 
         source = string_parser.wrap_in_code_block(dict["source"], level="primary")
         content = string_parser.wrap_braces_in_color_span(content, color="LightSkyBlue")
