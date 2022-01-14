@@ -115,15 +115,22 @@ class SidebarSectionInspect:
                 multiselect_nodes = st.multiselect(
                     self.dict_language["multiselect_inspect_nodes"], options=self.list_node_frequency_id + ["[ALL]"]
                 )
-                nodes_secondary = st.multiselect(
-                    self.dict_language["secondary_inspect_nodes"], options=self.get_coexist_nodes(multiselect_nodes)
-                )
+
+                if multiselect_nodes != ["[ALL]"]:
+                    nodes_secondary = st.multiselect(
+                        self.dict_language["secondary_inspect_nodes"], options=self.get_coexist_nodes(multiselect_nodes)
+                    )
+                else:
+                    nodes_secondary = []
 
                 nodes_combined = multiselect_nodes + nodes_secondary
 
-                nodes_as_keywords: list[str] = [
-                    i.replace("-", " ").replace("_", " ") for i in [self.get_id(i) for i in nodes_combined]
-                ]
+                try:
+                    nodes_as_keywords: list[str] = [
+                        i.replace("-", " ").replace("_", " ") for i in [self.get_id(i) for i in nodes_combined]
+                    ]
+                except IndexError:
+                    nodes_as_keywords = []
 
                 if nodes_combined and "[ALL]" not in nodes_combined:
                     subset: list[dict] = [
