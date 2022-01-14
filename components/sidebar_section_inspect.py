@@ -11,6 +11,7 @@ from functions.modify_node import ModifyNode
 from functions.set_language import set_language
 from functions.string_parser import string_parser
 from natsort import natsorted
+from utils.documents.create_dict import CreateDict
 from utils.documents.get_note_proportion import GetNoteProportion
 from utils.nodes.get_nodes_network import GetNodesNetwork
 
@@ -34,9 +35,7 @@ class SidebarSectionInspect:
         except FileNotFoundError:
             pass
 
-        st.markdown(f"> ## 「{self.dict_language['title_expander_nodes_inspect']}」")
-        self.sidebar_expander_inspect(main_c1)
-        SectionPush()
+        self.layout_main(main_c1)
 
     def read_dicts_data(self) -> list[dict]:
         """Read the main dictionary from store folder.
@@ -54,6 +53,17 @@ class SidebarSectionInspect:
     def set_list_unique_pdfs(self) -> list[str]:
         all_pdfs: list = self.flatten([i["source"] for i in self.data_list_dicts])
         self.all_pdfs: list = list(set(all_pdfs))
+
+    def component_button_create_json(self):
+        button_create_json = st.button(self.dict_language["button_produce_dict_main"])
+        if button_create_json:
+            CreateDict()
+            st.experimental_rerun()
+
+    def layout_main(self, main_c1):
+        self.component_button_create_json()
+        self.sidebar_expander_inspect(main_c1)
+        SectionPush()
 
     def sidebar_expander_inspect(self, main_c1):
         if os.path.exists(self.path_store / "dicts.json"):

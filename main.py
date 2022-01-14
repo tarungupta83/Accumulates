@@ -14,14 +14,14 @@ from pages.create_log_path import CreateLogPath
 class Main:
     def __init__(self):
         self.dict_language = set_language()
-        self.init_session_state()
+        # self.init_session_state()
         self.set_width()
         self.area_main()
         self.area_sidebar()
 
-    def init_session_state(self):
-        if "PDFs_IMPORTED" not in st.session_state:
-            st.session_state["PDFs_IMPORTED"] = False
+    # def init_session_state(self):
+    #     if "PDFs_IMPORTED" not in st.session_state:
+    #         st.session_state["PDFs_IMPORTED"] = False
 
     def set_width(self):
         st.markdown(
@@ -43,8 +43,9 @@ class Main:
             if not os.path.exists(Path("store")):
                 SidebarSectionPull()
             else:
-                st.markdown(f"> ## 「{self.dict_language['title_expander_documents']}」")
+                st.title(f"「{self.dict_language['title_expander_documents']}」")
                 sidebar_section_document()
+                st.title(f"「{self.dict_language['title_expander_nodes_inspect']}」")
                 SidebarSectionInspect(self.main_c1)
 
 
