@@ -160,8 +160,15 @@ class CreateDict:
         all_nodes: list = self.flatten(all_nodes)
         self.frequencies: collections.Counter = counter(all_nodes)
         self.frequencies: dict = dict(self.frequencies)
+
+        self.frequencies_manual = self.frequencies.copy()
+        self.frequencies_auto = self.frequencies.copy()
+
         for key in self.frequencies.keys():
             self.frequencies[key] += self.get_num_unregistered_notes(key)
+
+        for key in self.frequencies_auto.keys():
+            self.frequencies_auto[key] = self.get_num_unregistered_notes(key)
 
     def get_num_unregistered_notes(self, key):
         return len(
@@ -179,7 +186,22 @@ class CreateDict:
                 "id": key,
                 "frequency": float(self.frequencies[key]),
                 "time_score": self.get_time_score(key),
-                "frequency_id": "".join(["[", str(self.frequencies[key]), "]", key]),
+                "frequency_id": "".join(
+                    [
+                        "[",
+                        str(self.frequencies[key]),
+                        "]",
+                        "[",
+                        str(self.frequencies_manual[key]),
+                        ":",
+                        str(self.frequencies_auto[key]),
+                        "]",
+                        "-",
+                        "[",
+                        key,
+                        "]",
+                    ]
+                ),
             }
             for key in self.frequencies.keys()
         ]
