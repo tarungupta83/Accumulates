@@ -52,7 +52,7 @@ class string_parser:
     def wrap_content_in_color_span(text: str, color: str):
         return f"<span style='color:{color};font-weight:bold'>{text}</span>"
 
-    def get_card_html(dict: dict, keywords: list[str], selected_keywords: list[str]):
+    def get_card_html(dict: dict, keywords: list[str], selected_keywords: list[str], options: list):
         content = dict["content"]
         keywords = [i for i in keywords if i in content and i not in selected_keywords]
         selected_keywords = [i for i in selected_keywords if i in content]
@@ -82,13 +82,27 @@ class string_parser:
         note = "No comments" if note.replace(" ", "") == "" else note
 
         if type(dict["nodes_frequency_id"]) == list:
-            node_primary = string_parser.wrap_in_code_block(dict["nodes_frequency_id"][0], level="primary")
+            node_primary = string_parser.wrap_in_code_block(dict["nodes_frequency_id"][0], level="teal-bg")
             nodes_secondary = " ".join(
-                [string_parser.wrap_in_code_block(i, level="secondary") for i in dict["nodes_frequency_id"][1:]]
+                [string_parser.wrap_in_code_block(i, level="city") for i in dict["nodes_frequency_id"][1:]]
             )
+
+            for i in options:
+                node_primary = node_primary.replace(
+                    i, string_parser.wrap_content_in_color_span(text=i, color="Gold")
+                )
+                nodes_secondary = nodes_secondary.replace(
+                    i, string_parser.wrap_content_in_color_span(text=i, color="Gold")
+                )
+
         elif type(dict["nodes_frequency_id"]) == str:
-            node_primary = string_parser.wrap_in_code_block(dict["nodes_frequency_id"], level="primary")
+            node_primary = string_parser.wrap_in_code_block(dict["nodes_frequency_id"], level="teal-bg")
             nodes_secondary = " "
+
+            for i in options:
+                node_primary = node_primary.replace(
+                    i, string_parser.wrap_content_in_color_span(text=i, color="Gold")
+                )
 
         return f"""
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">

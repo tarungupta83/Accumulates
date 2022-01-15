@@ -155,6 +155,7 @@ class SidebarSectionInspect:
                             dict=i,
                             keywords=[i for i in open(Path("store", "keywords.json")).read().split("\n") if i],
                             selected_keywords=nodes_as_keywords,
+                            options=nodes_combined,
                         ),
                         unsafe_allow_html=True,
                     )
@@ -308,6 +309,7 @@ class SidebarSectionInspect:
                             dict=i,
                             keywords=[i for i in open(Path("store", "keywords.json")).read().split("\n") if i],
                             selected_keywords=nodes_as_keywords,
+                            options=nodes_to_translate,
                         ),
                         unsafe_allow_html=True,
                     )
@@ -378,6 +380,7 @@ class SidebarSectionInspect:
                             dict=i,
                             keywords=[i for i in open(Path("store", "keywords.json")).read().split("\n") if i],
                             selected_keywords=nodes_as_keywords,
+                            options=nodes_to_aggregate,
                         ),
                         unsafe_allow_html=True,
                     )
