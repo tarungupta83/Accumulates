@@ -44,10 +44,33 @@ class CreateDict:
     def set_dict_suggestion(self):
         combinations: list[tuple] = list(product(*[self.frequencies.keys(), self.frequencies.keys()]))
         combinations = {frozenset(x) for x in combinations}
-        combinations = [list(x) for x in combinations]
-        combinations = [i for i in combinations if len(i) == 2]
+        combinations = (list(x) for x in combinations)
+        combinations = (i for i in combinations if len(i) == 2)
+
+        # combinations_new = []
+        # append = combinations_new.append
+        # for c in combinations:
+        #     if c[0] in c[1] or c[1] in c[0]:
+        #         append(
+        #             {
+        #                 "pair": "".join([c[0], " / ", c[1]]),
+        #                 "distance": distance(c[0], c[1]) / (len(c[0]) + len(c[1])),
+        #             }
+        #         )
+        #     else:
+        #         append(
+        #             {
+        #                 "pair": "".join([c[0], " / ", c[1]]),
+        #                 "distance": (distance(c[0], c[1]) * 2) / (len(c[0]) + len(c[1])),
+        #             }
+        #         )
         combinations: list[dict] = [
-            {"pair": "".join([c[0], " / ", c[1]]), "distance": (distance(c[0], c[1]) * 2) / (len(c[0]) + len(c[1]))}
+            {"pair": "".join([c[0], " / ", c[1]]), "distance": distance(c[0], c[1]) / (len(c[0]) + len(c[1]))}
+            if c[0] in c[1] or c[1] in c[0]
+            else {
+                "pair": "".join([c[0], " / ", c[1]]),
+                "distance": (distance(c[0], c[1]) * 2) / (len(c[0]) + len(c[1])),
+            }
             for c in combinations
         ]
         combinations = [i for i in combinations if i["distance"] != 0]
