@@ -6,6 +6,7 @@ from pathlib import Path
 import fitz
 import pyperclip
 import streamlit as st
+from functions.aggregate import Aggregate
 from functions.modify_meta_subject import ModifyDocSubject
 from functions.modify_node import ModifyNode
 from functions.set_language import set_language
@@ -76,6 +77,8 @@ class SidebarSectionInspect:
                     self.dict_language["button_produce_nodes_network"],
                     self.dict_language["multiselect_inspect_nodes"],
                     self.dict_language["node_translate"],
+                    self.dict_language["node_aggregate"],
+                    self.dict_language["node_similar"],
                 ),
             )
         else:
@@ -311,6 +314,82 @@ class SidebarSectionInspect:
 
                 if os.path.exists(self.path_store / "translate.json"):
                     st.write(list_registered_translations)
+
+        elif select_box_which_stats == self.dict_language["node_aggregate"]:
+            with main_c1:
+                list_node_frequency_id = self.list_node_frequency_id
+                if os.path.exists(self.path_store / "aggregate.json"):
+                    with open(self.path_store / "aggregate.json") as reader:
+                        list_registered_aggregations = json.load(reader)
+                    list_node_frequency_id = [
+                        i for i in list_node_frequency_id if i not in list_registered_aggregations
+                    ]
+                nodes_to_aggregate = st.multiselect(
+                    self.dict_language["nodes_to_aggregate"], options=list_node_frequency_id
+                )
+
+                nodes_as_keywords: list[str] = [
+                    i.replace("-", " ").replace("_", " ") for i in [self.get_id(i) for i in nodes_to_aggregate]
+                ]
+
+                button_register = st.button(self.dict_language["nodes_register"])
+                if nodes_to_aggregate:
+                    subset: list[dict] = [
+                        i
+                        for i in self.data_list_dicts
+                        if set(nodes_to_aggregate).intersection(i["nodes_frequency_id"])
+                        or any(
+                            e in i["content"]
+                            for e in nodes_as_keywords + [i.replace(" ", "-") for i in nodes_as_keywords]
+                        )
+                    ]
+                else:
+                    subset = []
+
+                if nodes_to_aggregate and button_register and not os.path.exists(self.path_store / "aggregate.json"):
+                    with open(self.path_store / "aggregate.json", "w") as writer:
+                        json.dump(nodes_to_aggregate, writer)
+                    st.experimental_rerun()
+
+                elif os.path.exists(self.path_store / "aggregate.json"):
+                    with open(self.path_store / "aggregate.json") as reader:
+                        list_registered_aggregations = json.load(reader)
+                    button_apply_registration = st.button(self.dict_language["nodes_apply_registration"])
+                    button_clear_registration = st.button(self.dict_language["nodes_clear_registration"])
+
+                    if nodes_to_aggregate and button_register:
+                        list_registered_aggregations += nodes_to_aggregate
+                        list_registered_aggregations = list(set(list_registered_aggregations))
+                        with open(self.path_store / "aggregate.json", "w") as writer:
+                            json.dump(list_registered_aggregations, writer)
+                        st.experimental_rerun()
+
+                    if button_apply_registration:
+                        Aggregate()
+                        st.experimental_rerun()
+
+                    if button_clear_registration:
+                        os.remove(self.path_store / "aggregate.json")
+                        st.experimental_rerun()
+
+                for i in subset:
+                    st.markdown(
+                        string_parser.get_card_html(
+                            dict=i,
+                            keywords=[i for i in open(Path("store", "keywords.json")).read().split("\n") if i],
+                            selected_keywords=nodes_as_keywords,
+                        ),
+                        unsafe_allow_html=True,
+                    )
+
+                if os.path.exists(self.path_store / "aggregate.json"):
+                    st.write(list_registered_aggregations)
+
+        elif select_box_which_stats == self.dict_language["node_similar"]:
+            with main_c1:
+                with open(self.path_store / "suggest.json") as reader:
+                    suggestions = json.load(reader)
+                st.write(suggestions[:100])
 
     def flatten(self, list_input) -> list:
         if len(list_input) == 0:

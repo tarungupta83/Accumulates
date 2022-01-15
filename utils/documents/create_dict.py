@@ -1,14 +1,15 @@
-import collections
+import itertools
 import json
 import os
 import re
-from collections import Counter as counter
+from itertools import product
 from pathlib import Path
 from re import findall
 
 import fitz
 import numpy as np
 import streamlit as st
+from Levenshtein import distance
 from natsort import natsorted
 
 
@@ -17,11 +18,15 @@ class CreateDict:
         self.path_store = Path("store")
         self.path_output_main = self.path_store / "dicts.json"
         self.path_output_node = self.path_store / "nodes.json"
+        self.path_output_suggestion = self.path_store / "suggest.json"
 
         self.set_list_pdfs()
         self.make_dict_main()
 
         self.set_frequency_table_all_nodes()
+
+        self.set_dict_suggestion()
+
         self.get_dict_ranked_time_creation()
         self.set_list_dict_node()
         self.save_list_dict_node()
@@ -35,6 +40,20 @@ class CreateDict:
             d["nodes_frequency_id"] = [self.get_frequency_id(id) for id in d["nodes"] if type(d["nodes"]) is list]
             if type(d["nodes"]) is str:
                 d["nodes_frequency_id"] = self.get_frequency_id(d["nodes"])
+
+    def set_dict_suggestion(self):
+        combinations: list[tuple] = list(product(*[self.frequencies.keys(), self.frequencies.keys()]))
+        combinations = {frozenset(x) for x in combinations}
+        combinations = [list(x) for x in combinations]
+        combinations = [i for i in combinations if len(i) == 2]
+        combinations: list[dict] = [
+            {"pair": "".join([c[0], " / ", c[1]]), "distance": (distance(c[0], c[1]) * 2) / (len(c[0]) + len(c[1]))}
+            for c in combinations
+        ]
+        combinations = [i for i in combinations if i["distance"] != 0]
+        combinations: list[dict] = natsorted(combinations, key=lambda d: d["distance"])
+        with open(self.path_output_suggestion, "w") as writer:
+            json.dump(combinations, writer)
 
     def get_frequency_id(self, id) -> str:
         target: dict = [i for i in self.list_dict_node if i["id"] == id][0]
@@ -73,7 +92,7 @@ class CreateDict:
         ]
 
     def get_dict_from_annot(self, page: fitz.Page, annot: fitz.Annot, index_page: int) -> dict:
-        text_annot: str = self._extract_annot(annot=annot, words_on_page=page.get_text("words"))
+        text_annot: str = self._extract_annot(annot=annot, page=page)
         dict_annot: dict = {
             "content": text_annot,
             "note": self.filter_note(annot.info["content"]),
@@ -107,7 +126,7 @@ class CreateDict:
         else:
             return "None"
 
-    def _extract_annot(self, annot: fitz.Annot, words_on_page: list):
+    def _extract_annot(self, annot: fitz.Annot, page: fitz.Page):
         """Extract words in a given highlight.
 
         Args:
@@ -117,6 +136,7 @@ class CreateDict:
         Returns:
             str: words in the entire highlight.
         """
+        words_on_page = page.get_text("words")
         quad_points = annot.vertices
         try:
             quad_count = int(len(quad_points) / 4)
@@ -154,12 +174,12 @@ class CreateDict:
             contain = False
         return contain
 
-    ## Current
     def set_frequency_table_all_nodes(self):
         all_nodes: list = [i["nodes"] for i in self.list_dict_main]
         all_nodes: list = self.flatten(all_nodes)
-        self.frequencies: collections.Counter = counter(all_nodes)
-        self.frequencies: dict = dict(self.frequencies)
+        all_nodes: list = list(set(all_nodes))
+
+        self.frequencies: dict = {i: self.get_node_frequency(i) for i in all_nodes}
 
         self.frequencies_manual = self.frequencies.copy()
         self.frequencies_auto = self.frequencies.copy()
@@ -169,6 +189,9 @@ class CreateDict:
 
         for key in self.frequencies_auto.keys():
             self.frequencies_auto[key] = self.get_num_unregistered_notes(key)
+
+    def get_node_frequency(self, node: str):
+        return len([i for i in self.list_dict_main if node in i["nodes"]])
 
     def get_num_unregistered_notes(self, key):
         return len(

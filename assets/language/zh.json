@@ -71,5 +71,9 @@
   "nodes_clear_registration": "清除",
   "nodes_apply_registration": "应用",
 
-  "secondary_inspect_nodes": "共存节点"
+  "secondary_inspect_nodes": "共存节点",
+
+  "node_aggregate": "整合节点",
+  "nodes_to_aggregate": "目标整合",
+  "node_similar": "类似节点"
 }

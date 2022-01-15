@@ -68,5 +68,9 @@
   "nodes_clear_registration": "CLEAR REGISTRATION",
   "nodes_apply_registration": "APPLY REGISTRATION",
 
-  "secondary_inspect_nodes": "SECONDARY NODES"
+  "secondary_inspect_nodes": "SECONDARY NODES",
+
+  "node_aggregate": "NODES: AGGREGATE",
+  "nodes_to_aggregate": "NODES: TO AGGREGATE",
+  "node_similar": "NODES: SIMILAR PAIRS"
 }
