@@ -14,6 +14,7 @@ from pages.create_log_path import CreateLogPath
 class Main:
     def __init__(self):
         self.dict_language = set_language()
+        st.set_page_config(layout="wide")
         # self.init_session_state()
         self.set_width()
         self.area_main()
