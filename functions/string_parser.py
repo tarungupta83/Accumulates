@@ -37,7 +37,9 @@ class string_parser:
 
         # MainMenu {{visibility: hidden;}}
 
-        .reportview-container .main footer {{visibility: hidden;}}
+        footer {{visibility: hidden;}}
+
+        # .reportview-container .main footer {{visibility: hidden;}}
 
         # div.row-widget.stRadio > div{{flex-direction:row;}}
 </style>
@@ -86,9 +88,7 @@ class string_parser:
             )
 
             for i in options:
-                node_primary = node_primary.replace(
-                    i, string_parser.wrap_content_in_color_span(text=i, color="Gold")
-                )
+                node_primary = node_primary.replace(i, string_parser.wrap_content_in_color_span(text=i, color="Gold"))
                 nodes_secondary = nodes_secondary.replace(
                     i, string_parser.wrap_content_in_color_span(text=i, color="Gold")
                 )
@@ -98,9 +98,7 @@ class string_parser:
             nodes_secondary = " "
 
             for i in options:
-                node_primary = node_primary.replace(
-                    i, string_parser.wrap_content_in_color_span(text=i, color="Gold")
-                )
+                node_primary = node_primary.replace(i, string_parser.wrap_content_in_color_span(text=i, color="Gold"))
 
         return f"""
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
