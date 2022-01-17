@@ -159,7 +159,7 @@ class SidebarSectionInspect:
                         ),
                         unsafe_allow_html=True,
                     )
-            pyperclip.copy("\n\n".join([i["content"].replace("ﬁ", "fi") for i in subset]))
+            pyperclip.copy("\n\n".join([i["content"].replace("ﬁ", "fi").replace("ﬂ", "fl") for i in subset]))
 
         elif select_box_which_stats == self.dict_language["button_show_file_stats_unfinished"]:
             list_dict_notes_stats = GetNoteProportion().list_dict_notes_stats
