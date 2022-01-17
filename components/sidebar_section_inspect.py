@@ -140,7 +140,7 @@ class SidebarSectionInspect:
                         i
                         for i in self.data_list_dicts
                         if set(nodes_combined).issubset(i["nodes_frequency_id"])
-                        or any(
+                        or all(
                             e in i["content"]
                             for e in (nodes_as_keywords + [i.replace(" ", "-") for i in nodes_as_keywords])
                         )
@@ -262,7 +262,7 @@ class SidebarSectionInspect:
                         i
                         for i in self.data_list_dicts
                         if set(nodes_to_translate).intersection(i["nodes_frequency_id"])
-                        or any(
+                        or all(
                             e in i["content"]
                             for e in nodes_as_keywords + [i.replace(" ", "-") for i in nodes_as_keywords]
                         )
@@ -340,7 +340,7 @@ class SidebarSectionInspect:
                         i
                         for i in self.data_list_dicts
                         if set(nodes_to_aggregate).intersection(i["nodes_frequency_id"])
-                        or any(
+                        or all(
                             e in i["content"]
                             for e in nodes_as_keywords + [i.replace(" ", "-") for i in nodes_as_keywords]
                         )
@@ -409,7 +409,7 @@ class SidebarSectionInspect:
             i
             for i in self.data_list_dicts
             if set(list_input).issubset(i["nodes_frequency_id"])
-            or any(e in i["content"] for e in nodes_as_keywords + [i.replace(" ", "-") for i in nodes_as_keywords])
+            or all(e in i["content"] for e in nodes_as_keywords + [i.replace(" ", "-") for i in nodes_as_keywords])
         ]
         if list_input:
             return natsorted(
