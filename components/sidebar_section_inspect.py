@@ -297,6 +297,7 @@ class SidebarSectionInspect:
 
                     if button_apply_registration:
                         ModifyNode()
+                        CreateDict()
                         st.experimental_rerun()
 
                     if button_clear_registration:
@@ -368,6 +369,7 @@ class SidebarSectionInspect:
 
                     if button_apply_registration:
                         Aggregate()
+                        CreateDict()
                         st.experimental_rerun()
 
                     if button_clear_registration:

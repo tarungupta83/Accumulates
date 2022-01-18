@@ -1,4 +1,3 @@
-import itertools
 import json
 import os
 import re
@@ -11,6 +10,7 @@ import numpy as np
 import streamlit as st
 from Levenshtein import distance
 from natsort import natsorted
+from playsound import playsound
 
 
 class CreateDict:
@@ -34,6 +34,10 @@ class CreateDict:
 
         self.set_frequency_id_in_list_dict_main()
         self.save_dict_main()
+        self.play_end_sound()
+
+    def play_end_sound(self):
+        playsound(Path("assets", "sound", "end_create_dict.mp3"))
 
     def set_frequency_id_in_list_dict_main(self):
         for d in self.list_dict_main:
